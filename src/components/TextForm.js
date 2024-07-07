@@ -21,7 +21,6 @@ export default function TextForm(props) {
     //paragraphs count
     const paraCount = (text) => {
       const paragraphs = text.split('\n').filter(paragraph =>paragraph.trim() !== '')
-      // const paragraphsCount = paragraphs.length;
       return paragraphs.length;
     }
 
@@ -30,6 +29,20 @@ export default function TextForm(props) {
     const handleOnChange = (event) => {
         console.log("On Change ");
         setText(event.target.value);
+    }
+
+    //copy text to clipboard
+    const handleCopy = () => {
+      console.log("I am Copy ");
+      var text = document.getElementById("myBox");
+      text.select();
+      navigator.clipboard.writeText(text.value);
+    }
+
+    //remove extra spaces
+    const handleExtraSpaces = () => {
+      let newText = text.split(/[ ]+/);
+      setText(newText.join(" "))
     }
   
     const [text, setText] = useState('');
@@ -42,9 +55,12 @@ export default function TextForm(props) {
         <div className="mb-3">
         <textarea className="form-control" value={text} onChange={handleOnChange} id="myBox" rows="8"></textarea>
         </div>
-        <button className="btn btn-primary mx-2" onClick={handleUpClick}>Convert to Uppercase</button>
+        {/* <button className="btn btn-primary mx-2" onClick={handleUpClick}>Convert to Uppercase</button> */}
+        <button className="btn btn-primary mx-2"  onClick={handleUpClick}>Convert to Uppercase</button>
         <button className="btn btn-primary mx-2" onClick={handleLoClick}>Convert to Lowercase</button>
         <button className="btn btn-danger mx-2" onClick={handleClearClick}>Clear Text</button>
+        <button className="btn btn-secondary mx-2" onClick={handleCopy}>Copy Text</button>
+        <button className="btn btn-info mx-2" onClick={handleExtraSpaces}>Remove Extra Spaces</button>
       </div>
     <div className="container my-3">
       <h2>Your text summary</h2>
